@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import vn.unigap.api.entity.Employer;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,8 @@ public class EmployerDtoOut {
     private String name;
     private int provinceId;
     private String description;
-    private Date createAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
     public static EmployerDtoOut from (Employer e) {
         return EmployerDtoOut.builder()
@@ -29,6 +30,7 @@ public class EmployerDtoOut {
                 .provinceId(e.getProvinceId())
                 .description(e.getDescription())
                 .createAt(e.getCreatedAt())
+                .updateAt(e.getUpdatedAt())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package vn.unigap.api.dto.in;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -13,12 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UpdateEmployerDtoIn {
     @Id
-    @NotEmpty
+    @Min(1)
     private long id;
     @NotEmpty
     @Size(max = 255)
     private String name;
-    @NotEmpty
+    @Min(1)
     private int provinceId;
 
     private String description;

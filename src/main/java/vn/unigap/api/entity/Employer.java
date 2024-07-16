@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
@@ -29,9 +29,7 @@ public class Employer implements Serializable {
     @Column(name = "description")
     private String description;
     @Column(name = "createdAt")
-    @Builder.Default
-    private Date createdAt = new Date();
+    private LocalDateTime createdAt;
     @Column(name = "updatedAt")
-    @Builder.Default
-    private Date updatedAt = new Date();
+    private LocalDateTime updatedAt;
 }
