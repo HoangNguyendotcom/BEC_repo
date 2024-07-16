@@ -1,7 +1,7 @@
 package vn.unigap.api.service.employer;
 
-import vn.unigap.api.dto.in.EmployerDtoIn;
-import vn.unigap.api.dto.in.UpdateEmployerDtoIn;
+import vn.unigap.api.dto.in.Employer.EmployerDtoIn;
+import vn.unigap.api.dto.in.Employer.UpdateEmployerDtoIn;
 import vn.unigap.api.dto.in.PageDtoIn;
 import vn.unigap.api.dto.out.EmployerDtoOut;
 import vn.unigap.api.dto.out.PageDtoOut;
