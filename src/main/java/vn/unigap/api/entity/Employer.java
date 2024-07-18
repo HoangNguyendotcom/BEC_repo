@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "Employer")
 public class Employer implements Serializable {
     @Id
-    @SequenceGenerator(name = "my_sequence", sequenceName = "my_sequence", initialValue = 3094562)
+    @SequenceGenerator(name = "employer_sequence", sequenceName = "employers_sequence", initialValue = 3094562)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
     @Column(name = "id")
     private long id;
@@ -24,12 +26,15 @@ public class Employer implements Serializable {
     private String email;
     @Column(name = "name")
     private String name;
-    @Column(name = "province_id")
-    private int provinceId;
+    @Column(name = "province")
+    private int province;
     @Column(name = "description")
     private String description;
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "employer")
+    private List<Job> jobs = new ArrayList<>();
 }

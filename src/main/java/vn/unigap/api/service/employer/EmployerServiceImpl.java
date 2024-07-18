@@ -50,7 +50,7 @@ public class EmployerServiceImpl implements EmployerService {
         Employer employer = employerRepository.save(Employer.builder()
                 .email(employerDtoIn.getEmail())
                 .name(employerDtoIn.getName())
-                .provinceId(employerDtoIn.getProvinceId())
+                .province(employerDtoIn.getProvince())
                 .description(employerDtoIn.getDescription())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -63,7 +63,7 @@ public class EmployerServiceImpl implements EmployerService {
         Employer employer = employerRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer not found"));
         employer.setName(updateEmployerDtoIn.getName());
-        employer.setProvinceId(updateEmployerDtoIn.getProvinceId());
+        employer.setProvince(updateEmployerDtoIn.getProvinceId());
         employer.setDescription(updateEmployerDtoIn.getDescription());
         employer.setUpdatedAt(LocalDateTime.now());
 
@@ -71,7 +71,7 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteEmployer(Long id) {
         Employer employer = employerRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer not found"));
         employerRepository.delete(employer);

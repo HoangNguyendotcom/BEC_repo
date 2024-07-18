@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ import vn.unigap.api.dto.out.EmployerDtoOut;
 import vn.unigap.api.service.employer.EmployerService;
 import vn.unigap.common.controller.AbstractResponseController;
 
+
 @RestController
-@RequestMapping("/employers")
+@RequestMapping(value = "/employers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name="Employer", description = "Employers management")
 public class EmployerController extends AbstractResponseController {
     private final EmployerService employerService;
     @Autowired
@@ -72,9 +75,9 @@ public class EmployerController extends AbstractResponseController {
             @Content(mediaType = "application/json",schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class))
     })})
     @DeleteMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> deleteEmployer(@PathVariable(value = "id") Long id){
         return responseEntity(() -> {
-            this.employerService.delete(id);
+            this.employerService.deleteEmployer(id);
             return new HashMap<>();
         });
     }

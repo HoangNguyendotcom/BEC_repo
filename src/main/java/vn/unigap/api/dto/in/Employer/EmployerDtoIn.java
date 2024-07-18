@@ -24,7 +24,7 @@ public class EmployerDtoIn {
     private String name;
 
     @Min(1)
-    private int provinceId;
+    private int province;
 
     private String description;
 

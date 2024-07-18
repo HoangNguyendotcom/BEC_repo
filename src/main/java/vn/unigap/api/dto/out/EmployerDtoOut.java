@@ -17,7 +17,7 @@ public class EmployerDtoOut {
     private Long id;
     private String email;
     private String name;
-    private int provinceId;
+    private int province;
     private String description;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
@@ -27,7 +27,7 @@ public class EmployerDtoOut {
                 .id(e.getId())
                 .email(e.getEmail())
                 .name(e.getName())
-                .provinceId(e.getProvinceId())
+                .province(e.getProvince())
                 .description(e.getDescription())
                 .createAt(e.getCreatedAt())
                 .updateAt(e.getUpdatedAt())

@@ -12,5 +12,5 @@ public interface EmployerService {
     EmployerDtoOut create(EmployerDtoIn userDtoIn);
 
     EmployerDtoOut update(Long id, UpdateEmployerDtoIn updateEmployerDtoIn);
-    void delete(Long id);
+    void deleteEmployer(Long id);
 }
