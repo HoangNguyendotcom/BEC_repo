@@ -18,8 +18,8 @@ import java.util.List;
 @Table(name = "Employer")
 public class Employer implements Serializable {
     @Id
-    @SequenceGenerator(name = "employer_sequence", sequenceName = "employers_sequence", initialValue = 3094562)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
+    @SequenceGenerator(name = "employer_sequence", sequenceName = "employer_sequence", initialValue = 3094562)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employer_sequence")
     @Column(name = "id")
     private long id;
     @Column(name = "email", unique = true)
@@ -35,6 +35,6 @@ public class Employer implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "employer")
-    private List<Job> jobs = new ArrayList<>();
+//    @OneToMany(mappedBy = "employer")
+//    private List<Job> jobs = new ArrayList<>();
 }

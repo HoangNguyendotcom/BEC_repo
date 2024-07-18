@@ -11,7 +11,7 @@ import vn.unigap.api.dto.out.JobDtoOut;
 
 public interface JobService {
     PageDtoOut<JobDtoOut> list(PageDtoIn pageDtoIn);
-    JobDtoOut get(long id);
+    JobDtoOut getJobById(long id);
     JobDtoOut create(JobDtoIn jobDtoIn);
 
     JobDtoOut update(Long id, UpdateJobDtoIn updateJobDtoIn);

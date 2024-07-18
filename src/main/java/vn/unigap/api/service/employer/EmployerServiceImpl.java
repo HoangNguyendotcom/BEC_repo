@@ -36,7 +36,7 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public EmployerDtoOut get(Long id) {
+    public EmployerDtoOut getEmployerByID(Long id) {
         Employer employer = employerRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer Not Found"));
         return EmployerDtoOut.from(employer);

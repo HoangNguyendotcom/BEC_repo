@@ -46,9 +46,9 @@ public class EmployerController extends AbstractResponseController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseEmployer.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> get(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> getEmployerByID(@PathVariable(value = "id") Long id) {
         return responseEntity(() -> {
-            return this.employerService.get(id);
+            return this.employerService.getEmployerByID(id);
         });
     }
     @Operation(summary = "Create new employer", responses = { @ApiResponse(responseCode = "201", content = {

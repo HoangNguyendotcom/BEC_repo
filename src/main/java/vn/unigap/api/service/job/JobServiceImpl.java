@@ -26,9 +26,6 @@ import vn.unigap.common.exception.ApiException;
 import vn.unigap.common.data_transform.Converter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
-
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -54,7 +51,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobDtoOut get(long id){
+    public JobDtoOut getJobById(long id){
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Job Not Found"));
         return JobDtoOut.from(job);

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "resume")
-public class Resume {
+public class Resume implements Serializable {
     @Id
-    @SequenceGenerator(name = "resume_sequence", sequenceName = "resume_sequence", initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
+    @SequenceGenerator(name = "resume_sequence", sequenceName = "resume_sequence", initialValue = 8514316)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resume_sequence")
     @Column(name = "id")
     private long id;
 

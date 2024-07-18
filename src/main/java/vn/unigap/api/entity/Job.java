@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Job implements Serializable {
     @Id
     @SequenceGenerator(name = "jobs_sequence", sequenceName = "jobs_sequence", initialValue = 449936)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobs_sequence")
     @Column(name = "id")
     private long id;
     @Column(name = "employer_id")

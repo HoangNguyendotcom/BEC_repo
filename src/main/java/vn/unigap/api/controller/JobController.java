@@ -44,9 +44,9 @@ public class JobController  extends AbstractResponseController{
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = JobController.ResponseJob.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> get(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> getJobById(@PathVariable(value = "id") Long id) {
         return responseEntity(() -> {
-            return this.jobService.get(id);
+            return this.jobService.getJobById(id);
         });
     }
 

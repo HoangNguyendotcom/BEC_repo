@@ -8,16 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @Builder
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "job_field")
-public class Field {
+public class Field implements Serializable {
     @Id
-    @SequenceGenerator(name = "field_sequence", sequenceName = "field_sequence", initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
+    @SequenceGenerator(name = "field_sequence", sequenceName = "field_sequence", initialValue = 60)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "field_sequence")
     @Column(name = "id")
     private Integer id;
     @Column(name="name")
