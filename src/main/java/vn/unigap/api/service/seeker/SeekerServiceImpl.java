@@ -76,7 +76,7 @@ public class SeekerServiceImpl implements SeekerService {
     @Override
     public void deleteSeeker(Long id) {
         Seeker seeker = seekerRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Job not found"));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Seeker not found"));
         seekerRepository.delete(seeker);
     }
 }

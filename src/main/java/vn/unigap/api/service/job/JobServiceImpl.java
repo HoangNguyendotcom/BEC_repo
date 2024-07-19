@@ -6,26 +6,27 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 import vn.unigap.api.dto.in.Job.JobDtoIn;
 import vn.unigap.api.dto.in.Job.UpdateJobDtoIn;
 import vn.unigap.api.dto.in.PageDtoIn;
 
 import vn.unigap.api.dto.out.JobDtoOut;
+import vn.unigap.api.dto.out.JobSeekerDtoOut;
 import vn.unigap.api.dto.out.PageDtoOut;
 
-import vn.unigap.api.entity.Employer;
-import vn.unigap.api.entity.Job;
-import vn.unigap.api.repository.EmployerRepository;
-import vn.unigap.api.repository.FieldRepository;
-import vn.unigap.api.repository.JobRepository;
-import vn.unigap.api.repository.ProvinceRepository;
+import vn.unigap.api.entity.*;
+import vn.unigap.api.repository.*;
 import vn.unigap.common.data_transform.Converter;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
 import vn.unigap.common.data_transform.Converter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -41,6 +42,11 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     private EmployerRepository employerRepository;
+
+    @Autowired
+    private SeekerRepository seekerRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public PageDtoOut<JobDtoOut> list(PageDtoIn pageDtoIn) {
@@ -127,4 +133,51 @@ public class JobServiceImpl implements JobService {
         jobRepository.delete(job);
     }
 
+    @Override
+    public JobSeekerDtoOut getSuitableSeekers(long id){
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Job Not Found"));
+        List<Integer> provinceIds = Converter.extractIdFromStringDb(job.getProvinces());
+        List<Integer> fieldIds = Converter.extractIdFromStringDb(job.getFields());
+        List<Seeker> seekers = findBySalaryAndProvincesAndFields(job.getSalary(), provinceIds, fieldIds);
+        List<JobSeeker> jobseekers = seekers
+                                        .stream()
+                                        .map(seeker -> new JobSeeker(seeker.getId(), seeker.getName()))
+                                        .toList();
+        job.setSeekers(jobseekers);
+        return JobSeekerDtoOut.from(job);
+    }
+
+    public List<Seeker> findBySalaryAndProvincesAndFields(Integer salary, List<Integer> provinceIds, List<Integer> fieldIds) {
+        String baseQuery = "select s.* from seeker s "
+                + "inner join resume r on s.id = r.seeker_id "
+                + "where r.salary <= :salary ";
+
+        StringBuilder fieldQuery = new StringBuilder();
+        for (int i = 0; i < fieldIds.size(); i++) {
+            fieldQuery.append("r.fields like :field").append(i);
+            if (i < fieldIds.size() - 1) {
+                fieldQuery.append(" or ");
+            }
+        }
+        fieldQuery.append(") and (");
+        for (int i = 0; i < provinceIds.size(); i++) {
+            fieldQuery.append("r.provinces like :province").append(i);
+            if (i < provinceIds.size() - 1) {
+                fieldQuery.append(" or ");
+            }
+        }
+
+        Query query = entityManager.createNativeQuery(baseQuery + " and (" + fieldQuery.toString() + ")", Seeker.class);
+        query.setParameter("salary", salary);
+        for (int i = 0; i < fieldIds.size(); i++) {
+            query.setParameter("field" + i, "%-" + fieldIds.get(i) + "-%");
+        }
+        for (int i = 0; i < provinceIds.size(); i++) {
+            query.setParameter("province" + i, "%-" + provinceIds.get(i) + "-%");
+        }
+
+        return query.getResultList();
+
+    }
 }

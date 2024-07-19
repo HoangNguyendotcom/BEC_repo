@@ -81,11 +81,18 @@ public class JobController  extends AbstractResponseController{
         });
     }
 
-    private static class ResponseJob extends vn.unigap.common.response.ApiResponse<JobDtoOut>{
-
+    @Operation(summary = "Get suitable seekers for Job", responses = {@ApiResponse(responseCode = "200",
+            content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = JobController.ResponseJob.class)) }) })
+    @GetMapping(value = "/{id}/suitableSeekers", consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<?> getSuitableSeekers(@PathVariable(value = "id") Long id) {
+        return responseEntity(() -> {
+            return this.jobService.getSuitableSeekers(id);
+        });
     }
 
+    private static class ResponseJob extends vn.unigap.common.response.ApiResponse<JobDtoOut>{
+    }
     private static class ResponsePageJob extends vn.unigap.common.response.ApiResponse<PageDtoOut<JobDtoOut>>{
-
     }
 }

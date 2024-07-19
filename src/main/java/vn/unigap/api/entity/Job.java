@@ -8,8 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import vn.unigap.api.entity.JobSeeker;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -50,4 +51,6 @@ public class Job implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id", insertable = false, updatable = false)
     private Employer employer;
+
+    private List<JobSeeker> seekers;
 }

@@ -44,8 +44,8 @@ public class SeekerDtoOut {
                 .address(s.getAddress())
                 .provinceId(s.getProvince().getId())
                 .provinceName(provinceName)
-                .createdAt(s.getCreated_at())
-                .updateAt(s.getUpdated_at())
+                .createdAt(s.getCreatedAt())
+                .updateAt(s.getUpdatedAt())
                 .build();
     }
 }
