@@ -1,5 +1,6 @@
 package vn.unigap.api.service.job;
 
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -7,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 
 import vn.unigap.api.dto.in.Job.JobDtoIn;
 import vn.unigap.api.dto.in.Job.UpdateJobDtoIn;
@@ -26,7 +26,7 @@ import vn.unigap.common.data_transform.Converter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -149,34 +149,55 @@ public class JobServiceImpl implements JobService {
     }
 
     public List<Seeker> findBySalaryAndProvincesAndFields(Integer salary, List<Integer> provinceIds, List<Integer> fieldIds) {
-        String baseQuery = "select s.* from seeker s "
-                + "inner join resume r on s.id = r.seeker_id "
-                + "where r.salary <= :salary ";
+        // Base query
+        String baseQuery = "SELECT s.* FROM seeker s "
+                + "INNER JOIN resume r ON s.id = r.seeker_id "
+                + "WHERE r.salary <= :salary ";
 
+        // Building dynamic field conditions
         StringBuilder fieldQuery = new StringBuilder();
-        for (int i = 0; i < fieldIds.size(); i++) {
-            fieldQuery.append("r.fields like :field").append(i);
-            if (i < fieldIds.size() - 1) {
-                fieldQuery.append(" or ");
+        if (!fieldIds.isEmpty()) {
+            fieldQuery.append(" AND (");
+            for (int i = 0; i < fieldIds.size(); i++) {
+                fieldQuery.append("r.fields LIKE :field").append(i);
+                if (i < fieldIds.size() - 1) {
+                    fieldQuery.append(" OR ");
+                }
             }
-        }
-        fieldQuery.append(") and (");
-        for (int i = 0; i < provinceIds.size(); i++) {
-            fieldQuery.append("r.provinces like :province").append(i);
-            if (i < provinceIds.size() - 1) {
-                fieldQuery.append(" or ");
-            }
+            fieldQuery.append(")");
         }
 
-        Query query = entityManager.createNativeQuery(baseQuery + " and (" + fieldQuery.toString() + ")", Seeker.class);
+        // Building dynamic province conditions
+        StringBuilder provinceQuery = new StringBuilder();
+        if (!provinceIds.isEmpty()) {
+            provinceQuery.append(" AND (");
+            for (int i = 0; i < provinceIds.size(); i++) {
+                provinceQuery.append("r.provinces LIKE :province").append(i);
+                if (i < provinceIds.size() - 1) {
+                    provinceQuery.append(" OR ");
+                }
+            }
+            provinceQuery.append(")");
+        }
+
+        // Combine base query with dynamic conditions
+        String finalQuery = baseQuery + fieldQuery.toString() + provinceQuery.toString();
+
+        // Create query
+        Query query = entityManager.createNativeQuery(finalQuery, Seeker.class);
         query.setParameter("salary", salary);
+
+        // Set field parameters
         for (int i = 0; i < fieldIds.size(); i++) {
             query.setParameter("field" + i, "%-" + fieldIds.get(i) + "-%");
         }
+
+        // Set province parameters
         for (int i = 0; i < provinceIds.size(); i++) {
             query.setParameter("province" + i, "%-" + provinceIds.get(i) + "-%");
         }
 
+        // Execute query and return results
         return query.getResultList();
 
     }

@@ -16,4 +16,11 @@ import java.util.List;
 public interface JobRepository extends JpaRepository<Job, Long> {
     Integer countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
+//    @Query("SELECT s FROM Seeker s JOIN Resume r ON s.id = r.seeker.id " +
+//                "WHERE r.salary <= :salary " +
+//                "AND (:fieldIds IS NULL OR r.fields IN :fieldIds) " +
+//                "AND (:provinceIds IS NULL OR r.provinces IN :provinceIds)")
+//    List<Seeker> findAllBySalaryAndProvincesAndFields(@Param("salary") Integer salary,
+//                                                   @Param("provinceIds") List<Integer> provinceIds,
+//                                                   @Param("fieldIds") List<Integer> fieldIds);
 }
