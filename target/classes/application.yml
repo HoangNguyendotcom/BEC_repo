@@ -28,11 +28,11 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 ---
 spring:
-#  cache:
-#    cache-names: USER
-#    type: redis
-#    redis:
-#      time-to-live: PT2M
+  cache:
+    cache-names: USER
+    type: redis
+    redis:
+      time-to-live: PT2M
   data:
     redis:
       host: localhost
