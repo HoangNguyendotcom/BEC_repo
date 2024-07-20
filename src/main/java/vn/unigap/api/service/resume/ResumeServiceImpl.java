@@ -29,7 +29,7 @@ import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
 import vn.unigap.common.data_transform.Converter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import static vn.unigap.common.Holder.*;
 
@@ -84,6 +84,8 @@ public class ResumeServiceImpl implements ResumeService {
                 .salary(resumeDtoIn.getSalary())
                 .fields(Converter.ListToStringDb(resumeDtoIn.getFieldIds()))
                 .provinces(Converter.ListToStringDb(resumeDtoIn.getProvinceIds()))
+                .createdAt(new Date())
+                .updatedAt(new Date())
                 .build());
         return ResumeDtoOut.from(resume);
     }
@@ -109,7 +111,7 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setSalary(updateResumeDtoIn.getSalary());
         resume.setFields(Converter.ListToStringDb(updateResumeDtoIn.getFieldIds()));
         resume.setProvinces(Converter.ListToStringDb(updateResumeDtoIn.getProvinceIds()));
-        resume.setUpdatedAt(LocalDateTime.now());
+        resume.setUpdatedAt(new Date());
 
         return ResumeDtoOut.from(resume);
     }

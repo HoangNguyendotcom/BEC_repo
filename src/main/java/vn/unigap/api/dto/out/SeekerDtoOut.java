@@ -12,7 +12,6 @@ import vn.unigap.api.entity.Seeker;
 import vn.unigap.api.repository.ProvinceRepository;
 import vn.unigap.common.Holder;
 
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -29,8 +28,6 @@ public class SeekerDtoOut {
     private String address;
     private Integer provinceId;
     private String provinceName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
 
     public static SeekerDtoOut from (Seeker s) {
         ProvinceRepository provinceRepository = Holder.getProvinceRepository();
@@ -44,8 +41,6 @@ public class SeekerDtoOut {
                 .address(s.getAddress())
                 .provinceId(s.getProvince().getId())
                 .provinceName(provinceName)
-                .createdAt(s.getCreatedAt())
-                .updateAt(s.getUpdatedAt())
                 .build();
     }
 }

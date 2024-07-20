@@ -12,7 +12,7 @@ import vn.unigap.api.repository.SeekerRepository;
 import vn.unigap.common.Holder;
 import vn.unigap.common.data_transform.Converter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ public class JobSeekerDtoOut {
     private List<Field> fields;
     private List<Province> provinces;
     private Integer salary;
-    private LocalDateTime expiredAt;
+    private Date expiredAt;
     private List<JobSeeker> seekers;
 
     public static JobSeekerDtoOut from(Job j) {

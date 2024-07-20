@@ -1,5 +1,5 @@
 package vn.unigap.api.controller;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +20,7 @@ import vn.unigap.api.service.statistics.StatisticsService;
 import vn.unigap.common.controller.AbstractResponseController;
 
 @RestController
-@RequestMapping("/api/v1/statistics")
+@RequestMapping("/statistics")
 public class StatisticsController extends AbstractResponseController {
 
     private final StatisticsService statisticsService;
@@ -33,8 +33,8 @@ public class StatisticsController extends AbstractResponseController {
             @ApiResponse(responseCode = "200",
                     content = @Content(schema = @Schema(implementation = ResponseStatistics.class))) })
     @GetMapping(value="", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> statistics( @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
-                                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) {
+    public ResponseEntity<?> statistics( @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+                                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
         return responseEntity(() -> {
             return this.statisticsService.statistics(fromDate, toDate);
         });

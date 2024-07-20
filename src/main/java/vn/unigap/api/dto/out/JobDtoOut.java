@@ -9,7 +9,7 @@ import vn.unigap.api.repository.EmployerRepository;
 import vn.unigap.api.entity.Employer;
 import vn.unigap.common.Holder;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -25,9 +25,7 @@ public class JobDtoOut {
     private String fields;
     private String provinces;
     private Integer salary;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime expiredAt;
+    private Date expiredAt;
 
     public static JobDtoOut from (Job j) {
         EmployerRepository employerRepository = Holder.getEmployerRepository();
@@ -43,8 +41,6 @@ public class JobDtoOut {
                 .salary(j.getSalary())
                 .fields(j.getFields())
                 .provinces(j.getProvinces())
-                .createdAt(j.getCreatedAt())
-                .updatedAt(j.getUpdatedAt())
                 .expiredAt(j.getExpiredAt())
                 .employerId(j.getEmployerId())
                 .employerName(employerName)

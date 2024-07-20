@@ -13,8 +13,6 @@ import vn.unigap.api.repository.ProvinceRepository;
 import vn.unigap.api.repository.SeekerRepository;
 import vn.unigap.common.Holder;
 import vn.unigap.common.data_transform.Converter;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +29,6 @@ public class ResumeDtoOut {
     private List<Field> fields;
     private List<Province> provinces;
     private Integer salary;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public static ResumeDtoOut from (Resume r) {
         SeekerRepository seekerRepository = Holder.getSeekerRepository();
@@ -65,8 +61,6 @@ public class ResumeDtoOut {
                 .salary(r.getSalary())
                 .fields(fields)
                 .provinces(provinces)
-                .createdAt(r.getCreatedAt())
-                .updatedAt(r.getUpdatedAt())
                 .build();
     }
 }

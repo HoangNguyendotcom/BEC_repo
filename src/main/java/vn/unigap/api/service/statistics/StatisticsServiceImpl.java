@@ -2,11 +2,14 @@ package vn.unigap.api.service.statistics;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.unigap.api.dto.out.StatisticsDtoOut;
 import vn.unigap.api.repository.*;
+
+import static org.apache.commons.lang3.time.DateUtils.addDays;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
@@ -28,18 +31,18 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public StatisticsDtoOut statistics(LocalDate fromDate, LocalDate toDate) {
-        LocalDateTime start = fromDate.atStartOfDay();
-        LocalDateTime end = toDate.atStartOfDay().plusDays(1);
+    public StatisticsDtoOut statistics(Date fromDate, Date toDate) {
+        Date start = fromDate;
+        Date end = toDate;
         Integer numEmployers = employerRepository.countByCreatedAtBetween(start, end);
         Integer numJobs = jobRepository.countByCreatedAtBetween(start, end);
         Integer numSeekers = seekerRepository.countByCreatedAtBetween(start, end);
         Integer numResumes = resumeRepository.countByCreatedAtBetween(start, end);
         List<StatisticsDtoOut.AnalysisPerDayDto> chart = new ArrayList<>();
 
-        while(!fromDate.isAfter(toDate)){
-            LocalDateTime startOfDay = fromDate.atStartOfDay();
-            LocalDateTime endOfDay = fromDate.atStartOfDay().plusDays(1);
+        while(!fromDate.after(toDate)){
+            Date startOfDay = fromDate;
+            Date endOfDay = toDate;
             Integer numEmployer = employerRepository.countByCreatedAtBetween(startOfDay, endOfDay);
             Integer numJob = jobRepository.countByCreatedAtBetween(startOfDay, endOfDay);
             Integer numSeeker = seekerRepository.countByCreatedAtBetween(startOfDay, endOfDay);
@@ -52,7 +55,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     .numResume(numResume)
                     .build();
             chart.add(perDayDto);
-            fromDate = fromDate.plusDays(1);
+            fromDate = addDays(fromDate, 1);;
         }
         return StatisticsDtoOut.builder()
                 .numEmployers(numEmployers)

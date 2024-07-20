@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import vn.unigap.api.entity.Province;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @Builder
@@ -20,6 +19,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "seeker")
 public class Seeker implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "seeker_sequence", sequenceName = "seeker_sequence", initialValue = 4452947)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seeker_sequence")
@@ -33,10 +34,10 @@ public class Seeker implements Serializable {
     private String address;
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt = new Date();
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "province", insertable = false, updatable = false)

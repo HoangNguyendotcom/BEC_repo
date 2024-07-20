@@ -21,7 +21,6 @@ import vn.unigap.api.repository.SeekerRepository;
 import vn.unigap.common.data_transform.Converter;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
-import java.time.LocalDateTime;
 
 @Service
 public class SeekerServiceImpl implements SeekerService {

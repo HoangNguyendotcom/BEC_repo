@@ -19,8 +19,7 @@ public class EmployerDtoOut {
     private String name;
     private int province;
     private String description;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+
 
     public static EmployerDtoOut from (Employer e) {
         return EmployerDtoOut.builder()
@@ -29,8 +28,6 @@ public class EmployerDtoOut {
                 .name(e.getName())
                 .province(e.getProvince())
                 .description(e.getDescription())
-                .createAt(e.getCreatedAt())
-                .updateAt(e.getUpdatedAt())
                 .build();
     }
 }

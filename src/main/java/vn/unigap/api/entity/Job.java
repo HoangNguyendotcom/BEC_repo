@@ -1,6 +1,8 @@
 package vn.unigap.api.entity;
 
 import jakarta.persistence.*;
+
+import java.io.Serial;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import vn.unigap.api.entity.JobSeeker;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,6 +20,8 @@ import java.util.List;
 @Entity
 @Table(name = "Jobs")
 public class Job implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "jobs_sequence", sequenceName = "jobs_sequence", initialValue = 449936)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobs_sequence")
@@ -40,13 +43,13 @@ public class Job implements Serializable {
     private String provinces;
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt = new Date();
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt = new Date();
 
     @Column(name = "expired_at")
-    private LocalDateTime expiredAt;
+    private Date expiredAt = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id", insertable = false, updatable = false)

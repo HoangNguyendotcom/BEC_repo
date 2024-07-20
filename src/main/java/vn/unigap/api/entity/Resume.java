@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,6 +21,8 @@ import java.util.List;
 @Entity
 @Table(name = "resume")
 public class Resume implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "resume_sequence", sequenceName = "resume_sequence", initialValue = 8514317)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resume_sequence")
@@ -39,10 +42,10 @@ public class Resume implements Serializable {
     private String provinces;
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt = new Date();
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt = new Date();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -24,7 +24,7 @@ import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
 import vn.unigap.common.data_transform.Converter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -88,8 +88,8 @@ public class JobServiceImpl implements JobService {
                 .fields(Converter.ListToStringDb(jobDtoIn.getFieldIds()))
                 .provinces(Converter.ListToStringDb(jobDtoIn.getProvinceIds()))
                 .salary(jobDtoIn.getSalary())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .createdAt(new Date())
+                .updatedAt(new Date())
                 .expiredAt(jobDtoIn.getExpiredAt())
                 .build());
         return JobDtoOut.from(job);
@@ -122,7 +122,7 @@ public class JobServiceImpl implements JobService {
         job.setProvinces(Converter.ListToStringDb(updateJobDtoIn.getProvinceIds()));
         job.setSalary(updateJobDtoIn.getSalary());
         job.setExpiredAt(updateJobDtoIn.getExpiredAt());
-        job.setUpdatedAt(LocalDateTime.now());
+        job.setUpdatedAt(new Date());
 
         return JobDtoOut.from(job);
     }
