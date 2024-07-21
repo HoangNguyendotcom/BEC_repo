@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+NguyenDacHoang.java
+
 # Log files
 *.log
 !keep.log
