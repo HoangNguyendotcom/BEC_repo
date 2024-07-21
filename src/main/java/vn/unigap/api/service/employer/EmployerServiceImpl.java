@@ -41,7 +41,7 @@ public class EmployerServiceImpl extends BaseRedisServiceImpl implements Employe
     }
 
     @Override
-    public EmployerDtoOut getEmployerByID(Long id) {
+    public EmployerDtoOut getEmployerById(Long id) {
         Employer employer = employerRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer Not Found"));
         this.hashSet(id.toString(), employer.getName(), employer.getEmail());

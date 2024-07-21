@@ -8,13 +8,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.unigap.api.dto.in.Job.JobDtoIn;
-import vn.unigap.api.dto.in.Job.UpdateJobDtoIn;
 import vn.unigap.api.dto.in.PageDtoIn;
 import vn.unigap.api.dto.in.Seeker.SeekerDtoIn;
 import vn.unigap.api.dto.out.PageDtoOut;
@@ -22,12 +19,17 @@ import vn.unigap.api.dto.out.SeekerDtoOut;
 import vn.unigap.api.service.seeker.SeekerService;
 import vn.unigap.common.controller.AbstractResponseController;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 @RestController
 @RequestMapping(value = "/seekers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name="Seeker", description = "Seekers management")
 public class SeekerController extends AbstractResponseController{
     private final SeekerService seekerService;
+
+    private static final Logger logger = LogManager.getLogger(EmployerController.class);
     @Autowired
     public SeekerController( SeekerService seekerService){
         this.seekerService = seekerService;
@@ -48,9 +50,20 @@ public class SeekerController extends AbstractResponseController{
                     schema = @Schema(implementation = SeekerController.ResponseSeeker.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getSeekerById(@PathVariable(value = "id") Long id) {
-        return responseEntity(() -> {
-            return this.seekerService.getSeekerById(id);
-        });
+        logger.info("Received request to get seeker with ID: {}", id);
+        try {
+            SeekerDtoOut seeker = this.seekerService.getSeekerById(id);
+            if (seeker != null) {
+                logger.info("Successfully retrieved seeker with ID: {}", id);
+                return ResponseEntity.ok(seeker);
+            } else {
+                logger.warn("seeker with ID: {} not found", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("seeker not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error retrieving seeker with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
 
     @Operation(summary = "Create new seeker", responses = { @ApiResponse(responseCode = "201", content = {

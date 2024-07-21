@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import java.util.HashMap;
 @Tag(name = "Job", description = "List of Jobs")
 public class JobController  extends AbstractResponseController{
     private final JobService jobService;
+    private static final Logger logger = LogManager.getLogger(EmployerController.class);
 
     @Autowired
     public JobController(JobService jobService){ this.jobService = jobService; }
@@ -45,9 +48,20 @@ public class JobController  extends AbstractResponseController{
                             schema = @Schema(implementation = JobController.ResponseJob.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getJobById(@PathVariable(value = "id") Long id) {
-        return responseEntity(() -> {
-            return this.jobService.getJobById(id);
-        });
+        logger.info("Received request to get job with ID: {}", id);
+        try {
+            JobDtoOut job = this.jobService.getJobById(id);
+            if (job != null) {
+                logger.info("Successfully retrieved job with ID: {}", id);
+                return ResponseEntity.ok(job);
+            } else {
+                logger.warn("Job with ID: {} not found", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error retrieving job with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
 
     @Operation(summary = "Create new job", responses = { @ApiResponse(responseCode = "201", content = {

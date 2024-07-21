@@ -10,21 +10,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import vn.unigap.api.dto.in.Job.UpdateJobDtoIn;
-import vn.unigap.api.dto.in.Job.JobDtoIn;
 import vn.unigap.api.dto.in.PageDtoIn;
 import vn.unigap.api.dto.in.Resume.ResumeDtoIn;
 import vn.unigap.api.dto.in.Resume.UpdateResumeDtoIn;
-import vn.unigap.api.dto.in.Seeker.SeekerDtoIn;
-import vn.unigap.api.dto.out.EmployerDtoOut;
-import vn.unigap.api.dto.out.JobDtoOut;
 import vn.unigap.api.dto.out.PageDtoOut;
 import vn.unigap.api.dto.out.ResumeDtoOut;
-import vn.unigap.api.service.employer.EmployerService;
-import vn.unigap.api.service.job.JobService;
 import vn.unigap.api.service.resume.ResumeService;
 import vn.unigap.common.controller.AbstractResponseController;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
@@ -33,6 +28,8 @@ import java.util.HashMap;
 @Tag(name = "Resume", description = "List of Resumes")
 public class ResumeController extends AbstractResponseController{
     private final ResumeService resumeService;
+
+    private static final Logger logger = LogManager.getLogger(EmployerController.class);
     @Autowired
     public ResumeController( ResumeService resumeService){
         this.resumeService = resumeService;
@@ -53,9 +50,20 @@ public class ResumeController extends AbstractResponseController{
                     schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getResumeById(@PathVariable(value = "id") Long id) {
-        return responseEntity(() -> {
-            return this.resumeService.getResumeById(id);
-        });
+        logger.info("Received request to get resume with ID: {}", id);
+        try {
+            ResumeDtoOut resume = this.resumeService.getResumeById(id);
+            if (resume != null) {
+                logger.info("Successfully retrieved resume with ID: {}", id);
+                return ResponseEntity.ok(resume);
+            } else {
+                logger.warn("resume with ID: {} not found", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("resume not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error retrieving resume with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
     @Operation(summary = "Create new resume", responses = { @ApiResponse(responseCode = "201", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })

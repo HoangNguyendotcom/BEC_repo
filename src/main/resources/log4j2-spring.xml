@@ -32,6 +32,14 @@
 
         <!-- LOG "vn.unigap*" at TRACE level -->
         <Logger name="vn.unigap" level="trace"></Logger>
+
+        <!-- Set the Hibernate SQL logger level to WARN to suppress DEBUG logs -->
+        <Logger name="org.hibernate.SQL" level="warn"/>
+        <!-- Set the Hibernate SQL statement logger level to WARN -->
+        <Logger name="org.hibernate.engine.jdbc.internal.ResultSetReturn" level="warn"/>
+        <!-- Add specific logger for SqlStatementLogger -->
+        <Logger name="org.hibernate.engine.jdbc.internal.SqlStatementLogger" level="warn"/>
+
     </Loggers>
 
 </Configuration>

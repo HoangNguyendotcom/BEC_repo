@@ -20,12 +20,17 @@ import vn.unigap.api.dto.out.EmployerDtoOut;
 import vn.unigap.api.service.employer.EmployerService;
 import vn.unigap.common.controller.AbstractResponseController;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 @RestController
 @RequestMapping(value = "/employers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name="Employer", description = "Employers management")
 public class EmployerController extends AbstractResponseController {
     private final EmployerService employerService;
+
+    private static final Logger logger = LogManager.getLogger(EmployerController.class);
     @Autowired
     public EmployerController( EmployerService employerService){
         this.employerService = employerService;
@@ -46,10 +51,21 @@ public class EmployerController extends AbstractResponseController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseEmployer.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> getEmployerByID(@PathVariable(value = "id") Long id) {
-        return responseEntity(() -> {
-            return this.employerService.getEmployerByID(id);
-        });
+    public ResponseEntity<?> getEmployerById(@PathVariable(value = "id") Long id) {
+        logger.info("Received request to get employer with ID: {}", id);
+        try {
+            EmployerDtoOut employer = this.employerService.getEmployerById(id);
+            if (employer != null) {
+                logger.info("Successfully retrieved employer with ID: {}", id);
+                return ResponseEntity.ok(employer);
+            } else {
+                logger.warn("employer with ID: {} not found", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("employer not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error retrieving employer with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
     @Operation(summary = "Create new employer", responses = { @ApiResponse(responseCode = "201", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEmployer.class)) }) })
