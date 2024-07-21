@@ -80,9 +80,12 @@ public class JobServiceImpl implements JobService {
         if (!employerRepository.existsById(jobDtoIn.getEmployerId())) {
             throw new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "employer not found");
         }
+        long employerId = jobDtoIn.getEmployerId();
+        Employer employer = employerRepository.findById(employerId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer Not Found"));
         Job job = jobRepository.save(Job.builder()
                 .title(jobDtoIn.getTitle())
-                .employerId(jobDtoIn.getEmployerId())
+                .employer(employer)
                 .quantity(jobDtoIn.getQuantity())
                 .description(jobDtoIn.getDescription())
                 .fields(Converter.ListToStringDb(jobDtoIn.getFieldIds()))

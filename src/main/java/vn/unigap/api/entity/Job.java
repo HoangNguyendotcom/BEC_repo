@@ -27,8 +27,8 @@ public class Job implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobs_sequence")
     @Column(name = "id")
     private long id;
-    @Column(name = "employer_id")
-    private long employerId;
+//    @Column(name = "employer_id")
+//    private long employerId;
     @Column(name = "title")
     private String title;
     @Column(name = "quantity")
@@ -51,8 +51,8 @@ public class Job implements Serializable {
     @Column(name = "expired_at")
     private Date expiredAt = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employer_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "employer_id")
     private Employer employer;
 
     private List<JobSeeker> seekers;

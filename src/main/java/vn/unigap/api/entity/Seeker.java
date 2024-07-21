@@ -39,7 +39,7 @@ public class Seeker implements Serializable {
     @Column(name = "updated_at")
     private Date updatedAt = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "province", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "province")
     private Province province;
 }

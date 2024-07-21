@@ -29,9 +29,15 @@ public class JobDtoOut {
 
     public static JobDtoOut from (Job j) {
         EmployerRepository employerRepository = Holder.getEmployerRepository();
-        String employerName = employerRepository.findById(j.getEmployerId())
-                .map(Employer::getName)
-                .orElse(null);
+
+        long employerId = employerRepository.findById(j.getEmployer().getId())
+                    .map(Employer::getId)
+                    .orElse(0L);
+        String employerName = employerRepository.findById(j.getEmployer().getId())
+                    .map(Employer::getName)
+                    .orElse(null);
+
+
 
         return JobDtoOut.builder()
                 .id(j.getId())
@@ -42,7 +48,7 @@ public class JobDtoOut {
                 .fields(j.getFields())
                 .provinces(j.getProvinces())
                 .expiredAt(j.getExpiredAt())
-                .employerId(j.getEmployerId())
+                .employerId(employerId)
                 .employerName(employerName)
                 .build();
     }

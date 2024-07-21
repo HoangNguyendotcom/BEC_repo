@@ -37,9 +37,12 @@ public class JobSeekerDtoOut {
         ProvinceRepository provinceRepository = Holder.getProvinceRepository();
         FieldRepository fieldRepository = Holder.getFieldRepository();
 
-        String employerName = employerRepository.findById(j.getEmployerId())
+        String employerName = employerRepository.findById(j.getEmployer().getId())
                 .map(Employer::getName)
                 .orElse(null);
+        long employerId = employerRepository.findById(j.getEmployer().getId())
+                .map(Employer::getId)
+                .orElse(0L);
 
         List<Integer> provinceIds = Converter.extractIdFromStringDb(j.getProvinces());
         List<Integer> fieldIds = Converter.extractIdFromStringDb(j.getFields());
@@ -62,7 +65,7 @@ public class JobSeekerDtoOut {
                 .fields(fields)
                 .provinces(provinces)
                 .expiredAt(j.getExpiredAt())
-                .employerId(j.getEmployerId())
+                .employerId(employerId)
                 .employerName(employerName)
                 .seekers(j.getSeekers())
                 .build();
