@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 @RestController
 @RequestMapping(value = "/seekers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name="Seeker", description = "Seekers management")
+@SecurityRequirement(name = "Authorization")
 public class SeekerController extends AbstractResponseController{
     private final SeekerService seekerService;
 

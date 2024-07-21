@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping(value = "/jobs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Job", description = "List of Jobs")
+@SecurityRequirement(name = "Authorization")
 public class JobController  extends AbstractResponseController{
     private final JobService jobService;
     private static final Logger logger = LogManager.getLogger(EmployerController.class);

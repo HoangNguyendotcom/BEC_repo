@@ -12,12 +12,6 @@ public class LoggingController {
 
     @RequestMapping("/")
     public String index() {
-        logger.trace("A TRACE Message");
-        logger.debug("A DEBUG Message");
-        logger.info("An INFO Message");
-        logger.warn("A WARN Message");
-        logger.error("An ERROR Message");
-
-        return "James!!! Check out the Logs to see the output...";
+        return "Welcome to James's homepage!!!";
     }
 }

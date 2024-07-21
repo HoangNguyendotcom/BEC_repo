@@ -6,6 +6,10 @@ spring:
 
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 15m  # Set session timeout to 15 minutes
+
 ---
 spring:
   datasource:
@@ -42,6 +46,26 @@ spring:
       port: 6379
       password: Redis@123
 ---
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liS2v2Q8qL9JGOV2
+            client-secret: 836b912edad638bccae7b40f11f59bab4385df70
+            scope: read:user
+            redirect-uri: "http://localhost:8080/login/oauth2/code/github"
+            authorization-grant-type: authorization_code
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: id
+
+
+
 
 
 

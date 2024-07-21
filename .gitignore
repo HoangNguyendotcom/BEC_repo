@@ -4,10 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-NguyenDacHoang.java
 
 # Log files
 *.log
+logs/
 !keep.log
 
 ### STS ###
