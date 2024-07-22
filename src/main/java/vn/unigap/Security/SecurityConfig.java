@@ -44,39 +44,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //Login using Oauth2 with Github Authetication
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login**", "/error**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(withDefaults())
-                .formLogin(withDefaults())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")         // URL for logout
-                        .logoutSuccessUrl("/")         // Redirect after logout
-                        .invalidateHttpSession(true)   // Invalidate session
-                        .deleteCookies("JSESSIONID")   // Delete cookies
-                );
+//        http
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/", "/login**", "/error**").permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .oauth2Login(withDefaults())
+//                .formLogin(withDefaults())
+//                .logout(logout -> logout
+//                        .logoutUrl("/logout")         // URL for logout
+//                        .logoutSuccessUrl("/")         // Redirect after logout
+//                        .invalidateHttpSession(true)   // Invalidate session
+//                        .deleteCookies("JSESSIONID")   // Delete cookies
+//                );
 
-//        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
-//                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
-//                // .cors(cfg -> cfg.disable())
-//                .csrf(cfg -> cfg.disable())
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/", "/login**", "/error**", "/auth/login").permitAll()
-//                        .anyRequest().authenticated())
-//                .oauth2ResourceServer(configurer -> {
-//                    configurer.authenticationEntryPoint(customAuthEntryPoint);
-//                    configurer.jwt(jwtConfigurer -> {
-//                        try {
-//                            jwtConfigurer.decoder(NimbusJwtDecoder
-//                                    .withPublicKey(readPublicKey(new ClassPathResource("public.pem"))).build());
-//                        } catch (Exception e) {
-//                            log.error("Error: ", e);
-//                            throw new RuntimeException(e);
-//                        }
-//                    });
-//                });
+        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+                // .cors(cfg -> cfg.disable())
+                .csrf(cfg -> cfg.disable())
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/", "/login**", "/error**", "/auth/login").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(configurer -> {
+                    configurer.authenticationEntryPoint(customAuthEntryPoint);
+                    configurer.jwt(jwtConfigurer -> {
+                        try {
+                            jwtConfigurer.decoder(NimbusJwtDecoder
+                                    .withPublicKey(readPublicKey(new ClassPathResource("public.pem"))).build());
+                        } catch (Exception e) {
+                            log.error("Error: ", e);
+                            throw new RuntimeException(e);
+                        }
+                    });
+                });
         return http.build();
     }
 

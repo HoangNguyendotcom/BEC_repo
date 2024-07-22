@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
+import vn.unigap.api.controller.EmployerController;
 import vn.unigap.api.dto.in.AuthLoginDtoIn;
 import vn.unigap.api.dto.out.AuthLoginDtoOut;
 import vn.unigap.common.errorcode.ErrorCode;
@@ -22,6 +25,7 @@ import vn.unigap.common.exception.ApiException;
 public class AuthServiceImpl implements AuthService {
 
     private final UserDetailsService userDetailsService;
+    private static final Logger logger = LogManager.getLogger(EmployerController.class);
 
     private final JwtEncoder jwtEncoder;
 
@@ -47,8 +51,11 @@ public class AuthServiceImpl implements AuthService {
             throw new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "invalid credentials");
         }
 
+        logger.info("Grant Access for {}", loginDtoIn.getUsername());
+
         return AuthLoginDtoOut.builder().accessToken(grantAccessToken(userDetails.getUsername())).build();
     }
+
 
     private String grantAccessToken(String username) {
         long iat = System.currentTimeMillis() / 1000;

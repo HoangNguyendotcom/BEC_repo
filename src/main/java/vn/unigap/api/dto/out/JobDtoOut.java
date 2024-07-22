@@ -10,6 +10,7 @@ import vn.unigap.api.entity.Employer;
 import vn.unigap.common.Holder;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -30,10 +31,11 @@ public class JobDtoOut {
     public static JobDtoOut from (Job j) {
         EmployerRepository employerRepository = Holder.getEmployerRepository();
 
-        long employerId = employerRepository.findById(j.getEmployer().getId())
-                    .map(Employer::getId)
-                    .orElse(0L);
-        String employerName = employerRepository.findById(j.getEmployer().getId())
+        Optional<Long> employerIdOptional = Optional.ofNullable(j.getEmployer())
+                .map(Employer::getId);
+
+        long employerId = employerIdOptional.orElse(0L);
+        String employerName = employerRepository.findById(employerId)
                     .map(Employer::getName)
                     .orElse(null);
 
