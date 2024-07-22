@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.unigap.api.dto.out.StatisticsDtoOut;
-import vn.unigap.api.repository.*;
+import vn.unigap.api.repository.jpa.EmployerRepository;
+import vn.unigap.api.repository.jpa.JobRepository;
+import vn.unigap.api.repository.jpa.ResumeRepository;
+import vn.unigap.api.repository.jpa.SeekerRepository;
 
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 

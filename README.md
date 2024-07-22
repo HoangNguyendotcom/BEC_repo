@@ -91,4 +91,16 @@ The API Documentation is avaiable at http://localhost:8080/swagger-ui-custom.htm
 2. Using Oauth2 by GitHub for web:
     - Access the URL: http://localhost:8080/login
     - Login by Github
+
+   Link swagger doc
+   http://localhost:8080/swagger-ui/index.html
+
+   Link prometheus metrics
+   http://localhost:8080/actuator/prometheus
+
+   Link console prometheus
+   http://localhost:9090/
+
+   Link console grafana
+   http://localhost:3000/
     

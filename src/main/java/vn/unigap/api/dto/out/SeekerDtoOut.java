@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.unigap.api.entity.Province;
-import vn.unigap.api.entity.Seeker;
-import vn.unigap.api.repository.ProvinceRepository;
+import vn.unigap.api.entity.jpa.Province;
+import vn.unigap.api.entity.jpa.Seeker;
+import vn.unigap.api.repository.jpa.ProvinceRepository;
 import vn.unigap.common.Holder;
 
 @Data

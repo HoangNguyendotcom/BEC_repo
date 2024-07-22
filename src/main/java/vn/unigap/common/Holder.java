@@ -1,9 +1,9 @@
 package vn.unigap.common;
 
-import vn.unigap.api.repository.EmployerRepository;
-import vn.unigap.api.repository.FieldRepository;
-import vn.unigap.api.repository.ProvinceRepository;
-import vn.unigap.api.repository.SeekerRepository;
+import vn.unigap.api.repository.jpa.EmployerRepository;
+import vn.unigap.api.repository.jpa.FieldRepository;
+import vn.unigap.api.repository.jpa.ProvinceRepository;
+import vn.unigap.api.repository.jpa.SeekerRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

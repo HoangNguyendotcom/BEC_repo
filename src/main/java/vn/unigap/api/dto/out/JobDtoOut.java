@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.unigap.api.entity.Job;
-import vn.unigap.api.repository.EmployerRepository;
-import vn.unigap.api.entity.Employer;
+import vn.unigap.api.entity.jpa.Job;
+import vn.unigap.api.repository.jpa.EmployerRepository;
+import vn.unigap.api.entity.jpa.Employer;
 import vn.unigap.common.Holder;
 
 import java.util.Date;

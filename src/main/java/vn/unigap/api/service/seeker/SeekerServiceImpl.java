@@ -11,10 +11,10 @@ import vn.unigap.api.dto.in.PageDtoIn;
 import vn.unigap.api.dto.in.Seeker.SeekerDtoIn;
 import vn.unigap.api.dto.out.PageDtoOut;
 import vn.unigap.api.dto.out.SeekerDtoOut;
-import vn.unigap.api.entity.Seeker;
-import vn.unigap.api.entity.Province;
-import vn.unigap.api.repository.ProvinceRepository;
-import vn.unigap.api.repository.SeekerRepository;
+import vn.unigap.api.entity.jpa.Seeker;
+import vn.unigap.api.entity.jpa.Province;
+import vn.unigap.api.repository.jpa.ProvinceRepository;
+import vn.unigap.api.repository.jpa.SeekerRepository;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
 

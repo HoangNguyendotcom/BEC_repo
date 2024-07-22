@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import vn.unigap.api.entity.Employer;
+import vn.unigap.api.entity.jpa.Employer;
 
 @Data
 @AllArgsConstructor

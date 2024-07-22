@@ -12,20 +12,17 @@ import vn.unigap.api.dto.in.Resume.ResumeDtoIn;
 import vn.unigap.api.dto.in.Resume.UpdateResumeDtoIn;
 import vn.unigap.api.dto.out.PageDtoOut;
 import vn.unigap.api.dto.out.ResumeDtoOut;
-import vn.unigap.api.entity.Resume;
-import vn.unigap.api.repository.FieldRepository;
-import vn.unigap.api.repository.ProvinceRepository;
-import vn.unigap.api.repository.ResumeRepository;
+import vn.unigap.api.entity.jpa.Resume;
+import vn.unigap.api.repository.jpa.FieldRepository;
+import vn.unigap.api.repository.jpa.ProvinceRepository;
+import vn.unigap.api.repository.jpa.ResumeRepository;
 
-import vn.unigap.api.repository.SeekerRepository;
+import vn.unigap.api.repository.jpa.SeekerRepository;
 import vn.unigap.common.data_transform.Converter;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
-import vn.unigap.common.data_transform.Converter;
 
 import java.util.Date;
-
-import static vn.unigap.common.Holder.*;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {

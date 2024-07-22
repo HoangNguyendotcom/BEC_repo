@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.unigap.api.entity.*;
-import vn.unigap.api.repository.EmployerRepository;
-import vn.unigap.api.repository.FieldRepository;
-import vn.unigap.api.repository.ProvinceRepository;
+import vn.unigap.api.entity.jpa.*;
+import vn.unigap.api.repository.jpa.EmployerRepository;
+import vn.unigap.api.repository.jpa.FieldRepository;
+import vn.unigap.api.repository.jpa.ProvinceRepository;
 import vn.unigap.common.Holder;
 import vn.unigap.common.data_transform.Converter;
 

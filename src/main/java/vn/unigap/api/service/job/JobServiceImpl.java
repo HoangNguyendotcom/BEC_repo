@@ -17,12 +17,14 @@ import vn.unigap.api.dto.out.JobDtoOut;
 import vn.unigap.api.dto.out.JobSeekerDtoOut;
 import vn.unigap.api.dto.out.PageDtoOut;
 
-import vn.unigap.api.entity.*;
-import vn.unigap.api.repository.*;
+import vn.unigap.api.entity.jpa.Employer;
+import vn.unigap.api.entity.jpa.Job;
+import vn.unigap.api.entity.jpa.JobSeeker;
+import vn.unigap.api.entity.jpa.Seeker;
+import vn.unigap.api.repository.jpa.*;
 import vn.unigap.common.data_transform.Converter;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
-import vn.unigap.common.data_transform.Converter;
 
 import java.util.Date;
 import java.util.List;
