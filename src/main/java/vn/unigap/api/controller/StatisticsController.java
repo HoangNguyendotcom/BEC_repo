@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import vn.unigap.common.controller.AbstractResponseController;
 @RestController
 @RequestMapping("/statistics")
 @SecurityRequirement(name = "Authorization")
+@Tag(name="Statistics", description = "Total new items")
 public class StatisticsController extends AbstractResponseController {
 
     private final StatisticsService statisticsService;
