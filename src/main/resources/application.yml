@@ -25,6 +25,16 @@ spring:
       hibernate:
         auto_quote_keyword: true
     show-sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
 ---
 logging:
   level:
@@ -63,11 +73,17 @@ spring:
             token-uri: https://github.com/login/oauth/access_token
             user-info-uri: https://api.github.com/user
             user-name-attribute: id
+---
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui-custom.html
+---
+sentry:
+  dsn: https://271120737b3c796c5dc998958e86f9a4@o4507645258432512.ingest.us.sentry.io/4507645282549760
+
+
 
 
 

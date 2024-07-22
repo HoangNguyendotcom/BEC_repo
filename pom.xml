@@ -62,8 +62,17 @@
 		<!-- Sentry for error monitoring -->
 		<dependency>
 			<groupId>io.sentry</groupId>
-			<artifactId>sentry-spring-boot-starter</artifactId>
-			<version>6.3.0</version>
+			<artifactId>sentry-spring-boot-starter-jakarta</artifactId>
+			<version>6.30.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
 		<!-- Springdoc OpenAPI for Swagger UI -->
