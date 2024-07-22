@@ -12,7 +12,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -36,9 +35,9 @@ public class Resume implements Serializable {
     private String title;
     @Column(name = "salary")
     private Integer salary;
-    @Column(name="fields")
+    @Column(name = "fields")
     private String fields;
-    @Column(name="provinces")
+    @Column(name = "provinces")
     private String provinces;
     @CreationTimestamp
     @Column(name = "created_at")

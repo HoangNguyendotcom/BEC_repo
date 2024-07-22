@@ -1,4 +1,5 @@
 package vn.unigap.api.service.resume;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -6,19 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import vn.unigap.api.dto.in.Job.UpdateJobDtoIn;
 import vn.unigap.api.dto.in.PageDtoIn;
 import vn.unigap.api.dto.in.Resume.ResumeDtoIn;
 import vn.unigap.api.dto.in.Resume.UpdateResumeDtoIn;
-import vn.unigap.api.dto.in.Seeker.SeekerDtoIn;
-import vn.unigap.api.dto.out.JobDtoOut;
 import vn.unigap.api.dto.out.PageDtoOut;
 import vn.unigap.api.dto.out.ResumeDtoOut;
-import vn.unigap.api.dto.out.SeekerDtoOut;
-import vn.unigap.api.entity.Job;
-import vn.unigap.api.entity.Province;
 import vn.unigap.api.entity.Resume;
-import vn.unigap.api.entity.Seeker;
 import vn.unigap.api.repository.FieldRepository;
 import vn.unigap.api.repository.ProvinceRepository;
 import vn.unigap.api.repository.ResumeRepository;
@@ -38,7 +32,10 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeRepository resumeRepository;
 
     @Autowired
-    public ResumeServiceImpl(ResumeRepository resumeRepository){this.resumeRepository = resumeRepository;}
+    public ResumeServiceImpl(ResumeRepository resumeRepository) {
+        this.resumeRepository = resumeRepository;
+    }
+
     @Autowired
     public ProvinceRepository provinceRepository;
     @Autowired
@@ -48,13 +45,14 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public PageDtoOut<ResumeDtoOut> list(PageDtoIn pageDtoIn) {
-        Page<Resume> resumes = this.resumeRepository
-                .findAll(PageRequest.of(pageDtoIn.getPage() - 1, pageDtoIn.getPageSize(), Sort.by("title").ascending()));
+        Page<Resume> resumes = this.resumeRepository.findAll(
+                PageRequest.of(pageDtoIn.getPage() - 1, pageDtoIn.getPageSize(), Sort.by("title").ascending()));
         return PageDtoOut.from(pageDtoIn.getPage(), pageDtoIn.getPageSize(), resumes.getTotalElements(),
                 resumes.stream().map(ResumeDtoOut::from).toList());
     }
+
     @Override
-    public ResumeDtoOut getResumeById(long id){
+    public ResumeDtoOut getResumeById(long id) {
         Resume resume = this.resumeRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Resume Not Found"));
         return ResumeDtoOut.from(resume);
@@ -77,16 +75,11 @@ public class ResumeServiceImpl implements ResumeService {
         if (!seekerRepository.existsById(resumeDtoIn.getSeekerId())) {
             throw new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "seeker not found");
         }
-        Resume resume = resumeRepository.save(Resume.builder()
-                .seekerId(resumeDtoIn.getSeekerId())
-                .careerObj(resumeDtoIn.getCareerObj())
-                .title(resumeDtoIn.getTitle())
-                .salary(resumeDtoIn.getSalary())
+        Resume resume = resumeRepository.save(Resume.builder().seekerId(resumeDtoIn.getSeekerId())
+                .careerObj(resumeDtoIn.getCareerObj()).title(resumeDtoIn.getTitle()).salary(resumeDtoIn.getSalary())
                 .fields(Converter.ListToStringDb(resumeDtoIn.getFieldIds()))
-                .provinces(Converter.ListToStringDb(resumeDtoIn.getProvinceIds()))
-                .createdAt(new Date())
-                .updatedAt(new Date())
-                .build());
+                .provinces(Converter.ListToStringDb(resumeDtoIn.getProvinceIds())).createdAt(new Date())
+                .updatedAt(new Date()).build());
         return ResumeDtoOut.from(resume);
     }
 
@@ -115,7 +108,6 @@ public class ResumeServiceImpl implements ResumeService {
 
         return ResumeDtoOut.from(resume);
     }
-
 
     @Override
     public void deleteResume(Long id) {

@@ -27,13 +27,15 @@ import vn.unigap.common.data_transform.Converter;
 import java.util.Date;
 import java.util.List;
 
-
 @Service
 public class JobServiceImpl implements JobService {
     private final JobRepository jobRepository;
 
     @Autowired
-    public JobServiceImpl(JobRepository jobRepository){ this.jobRepository = jobRepository;}
+    public JobServiceImpl(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
+
     @Autowired
     private ProvinceRepository provinceRepository;
 
@@ -50,14 +52,14 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public PageDtoOut<JobDtoOut> list(PageDtoIn pageDtoIn) {
-        Page<Job> jobs = this.jobRepository
-                .findAll(PageRequest.of(pageDtoIn.getPage() - 1, pageDtoIn.getPageSize(), Sort.by("expiredAt").descending()));
+        Page<Job> jobs = this.jobRepository.findAll(
+                PageRequest.of(pageDtoIn.getPage() - 1, pageDtoIn.getPageSize(), Sort.by("expiredAt").descending()));
         return PageDtoOut.from(pageDtoIn.getPage(), pageDtoIn.getPageSize(), jobs.getTotalElements(),
                 jobs.stream().map(JobDtoOut::from).toList());
     }
 
     @Override
-    public JobDtoOut getJobById(long id){
+    public JobDtoOut getJobById(long id) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Job Not Found"));
         return JobDtoOut.from(job);
@@ -83,18 +85,11 @@ public class JobServiceImpl implements JobService {
         long employerId = jobDtoIn.getEmployerId();
         Employer employer = employerRepository.findById(employerId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Employer Not Found"));
-        Job job = jobRepository.save(Job.builder()
-                .title(jobDtoIn.getTitle())
-                .employer(employer)
-                .quantity(jobDtoIn.getQuantity())
-                .description(jobDtoIn.getDescription())
-                .fields(Converter.ListToStringDb(jobDtoIn.getFieldIds()))
-                .provinces(Converter.ListToStringDb(jobDtoIn.getProvinceIds()))
-                .salary(jobDtoIn.getSalary())
-                .createdAt(new Date())
-                .updatedAt(new Date())
-                .expiredAt(jobDtoIn.getExpiredAt())
-                .build());
+        Job job = jobRepository
+                .save(Job.builder().title(jobDtoIn.getTitle()).employer(employer).quantity(jobDtoIn.getQuantity())
+                        .description(jobDtoIn.getDescription()).fields(Converter.ListToStringDb(jobDtoIn.getFieldIds()))
+                        .provinces(Converter.ListToStringDb(jobDtoIn.getProvinceIds())).salary(jobDtoIn.getSalary())
+                        .createdAt(new Date()).updatedAt(new Date()).expiredAt(jobDtoIn.getExpiredAt()).build());
         return JobDtoOut.from(job);
     }
 
@@ -129,6 +124,7 @@ public class JobServiceImpl implements JobService {
 
         return JobDtoOut.from(job);
     }
+
     @Override
     public void deleteJob(Long id) {
         Job job = jobRepository.findById(id)
@@ -137,24 +133,22 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobSeekerDtoOut getSuitableSeekers(long id){
+    public JobSeekerDtoOut getSuitableSeekers(long id) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND, "Job Not Found"));
         List<Integer> provinceIds = Converter.extractIdFromStringDb(job.getProvinces());
         List<Integer> fieldIds = Converter.extractIdFromStringDb(job.getFields());
         List<Seeker> seekers = findBySalaryAndProvincesAndFields(job.getSalary(), provinceIds, fieldIds);
-        List<JobSeeker> jobseekers = seekers
-                                        .stream()
-                                        .map(seeker -> new JobSeeker(seeker.getId(), seeker.getName()))
-                                        .toList();
+        List<JobSeeker> jobseekers = seekers.stream().map(seeker -> new JobSeeker(seeker.getId(), seeker.getName()))
+                .toList();
         job.setSeekers(jobseekers);
         return JobSeekerDtoOut.from(job);
     }
 
-    public List<Seeker> findBySalaryAndProvincesAndFields(Integer salary, List<Integer> provinceIds, List<Integer> fieldIds) {
+    public List<Seeker> findBySalaryAndProvincesAndFields(Integer salary, List<Integer> provinceIds,
+            List<Integer> fieldIds) {
         // Base query
-        String baseQuery = "SELECT s.* FROM seeker s "
-                + "INNER JOIN resume r ON s.id = r.seeker_id "
+        String baseQuery = "SELECT s.* FROM seeker s " + "INNER JOIN resume r ON s.id = r.seeker_id "
                 + "WHERE r.salary <= :salary ";
 
         // Building dynamic field conditions

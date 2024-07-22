@@ -1,6 +1,5 @@
 package vn.unigap.api.repository;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -13,7 +12,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Repository
-public interface EmployerRepository extends JpaRepository<Employer, Long>{
+public interface EmployerRepository extends JpaRepository<Employer, Long> {
     Optional<Employer> findByEmail(String email);
 
     Page<Employer> findAll(Pageable page);

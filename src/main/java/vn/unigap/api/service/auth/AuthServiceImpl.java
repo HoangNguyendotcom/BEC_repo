@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public AuthServiceImpl(UserDetailsService userDetailsService, JwtEncoder jwtEncoder,
-                           PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.jwtEncoder = jwtEncoder;
         this.passwordEncoder = passwordEncoder;
@@ -55,7 +55,6 @@ public class AuthServiceImpl implements AuthService {
 
         return AuthLoginDtoOut.builder().accessToken(grantAccessToken(userDetails.getUsername())).build();
     }
-
 
     private String grantAccessToken(String username) {
         long iat = System.currentTimeMillis() / 1000;

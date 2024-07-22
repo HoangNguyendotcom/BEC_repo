@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +21,7 @@ public class JobDtoIn {
     private Integer quantity;
     private String description;
     @NotEmpty
-    private List<Integer> fieldIds ;
+    private List<Integer> fieldIds;
     @NotEmpty
     private List<Integer> provinceIds;
     private Integer salary;

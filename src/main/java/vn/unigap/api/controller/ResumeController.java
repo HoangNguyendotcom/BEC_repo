@@ -1,4 +1,5 @@
 package vn.unigap.api.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,28 +29,28 @@ import java.util.HashMap;
 @RequestMapping(value = "/resumes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Resume", description = "List of Resumes")
 @SecurityRequirement(name = "Authorization")
-public class ResumeController extends AbstractResponseController{
+public class ResumeController extends AbstractResponseController {
     private final ResumeService resumeService;
 
     private static final Logger logger = LogManager.getLogger(EmployerController.class);
+
     @Autowired
-    public ResumeController( ResumeService resumeService){
+    public ResumeController(ResumeService resumeService) {
         this.resumeService = resumeService;
     }
 
     @Operation(summary = "Get all resumes", responses = {
-            @ApiResponse(responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = ResumeController.ResponsePageResume.class))) })
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResumeController.ResponsePageResume.class))) })
     @GetMapping(value = "", consumes = MediaType.ALL_VALUE)
     // Add " ?page= X" to show the X page.
-    public ResponseEntity<?> list(@Valid PageDtoIn pageDtoIn){
+    public ResponseEntity<?> list(@Valid PageDtoIn pageDtoIn) {
         return responseEntity(() -> {
             return this.resumeService.list(pageDtoIn);
         });
     }
-    @Operation(summary = "Get resume by Id", responses = {@ApiResponse(responseCode = "200",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })
+
+    @Operation(summary = "Get resume by Id", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getResumeById(@PathVariable(value = "id") Long id) {
         logger.info("Received request to get resume with ID: {}", id);
@@ -67,6 +68,7 @@ public class ResumeController extends AbstractResponseController{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
+
     @Operation(summary = "Create new resume", responses = { @ApiResponse(responseCode = "201", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })
     @PostMapping(value = "")
@@ -76,27 +78,26 @@ public class ResumeController extends AbstractResponseController{
         }, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Update resume", responses = {@ApiResponse(responseCode = "201", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ResumeController.ResponseResume.class))
-    })})
+    @Operation(summary = "Update resume", responses = { @ApiResponse(responseCode = "201", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResumeController.ResponseResume.class)) }) })
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id,
-                                   @RequestBody @Valid UpdateResumeDtoIn updateResumeDtoIn){
+            @RequestBody @Valid UpdateResumeDtoIn updateResumeDtoIn) {
         return responseEntity(() -> {
-            return this.resumeService.update( id, updateResumeDtoIn);
+            return this.resumeService.update(id, updateResumeDtoIn);
         });
     }
 
-    @Operation(summary = "Delete resume", responses = {@ApiResponse(responseCode = "200", content = {
-            @Content(mediaType = "application/json",schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class))
-    })})
+    @Operation(summary = "Delete resume", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class)) }) })
     @DeleteMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> deleteResume(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> deleteResume(@PathVariable(value = "id") Long id) {
         return responseEntity(() -> {
             this.resumeService.deleteResume(id);
             return new HashMap<>();
         });
     }
+
     private static class ResponseResume extends vn.unigap.common.response.ApiResponse<ResumeDtoOut> {
     }
 

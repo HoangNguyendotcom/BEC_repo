@@ -22,6 +22,6 @@ public class Field implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "field_sequence")
     @Column(name = "id")
     private Integer id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 }

@@ -23,33 +23,31 @@ import vn.unigap.common.controller.AbstractResponseController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 @RestController
 @RequestMapping(value = "/seekers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name="Seeker", description = "Seekers management")
+@Tag(name = "Seeker", description = "Seekers management")
 @SecurityRequirement(name = "Authorization")
-public class SeekerController extends AbstractResponseController{
+public class SeekerController extends AbstractResponseController {
     private final SeekerService seekerService;
 
     private static final Logger logger = LogManager.getLogger(EmployerController.class);
+
     @Autowired
-    public SeekerController( SeekerService seekerService){
+    public SeekerController(SeekerService seekerService) {
         this.seekerService = seekerService;
     }
 
     @Operation(summary = "Get all seekers", responses = {
-            @ApiResponse(responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = SeekerController.ResponsePageSeeker.class))) })
-    @GetMapping(value="", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> list( @Valid PageDtoIn pageDtoIn){
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SeekerController.ResponsePageSeeker.class))) })
+    @GetMapping(value = "", consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<?> list(@Valid PageDtoIn pageDtoIn) {
         return responseEntity(() -> {
-            return this.seekerService.list(pageDtoIn);}
-        );
+            return this.seekerService.list(pageDtoIn);
+        });
     }
 
-    @Operation(summary = "Get seeker by Id", responses = {@ApiResponse(responseCode = "200",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = SeekerController.ResponseSeeker.class)) }) })
+    @Operation(summary = "Get seeker by Id", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = SeekerController.ResponseSeeker.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getSeekerById(@PathVariable(value = "id") Long id) {
         logger.info("Received request to get seeker with ID: {}", id);
@@ -77,22 +75,19 @@ public class SeekerController extends AbstractResponseController{
         }, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Update seeker", responses = {@ApiResponse(responseCode = "201", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = SeekerController.ResponseSeeker.class))
-    })})
+    @Operation(summary = "Update seeker", responses = { @ApiResponse(responseCode = "201", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = SeekerController.ResponseSeeker.class)) }) })
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id,
-                                    @RequestBody @Valid SeekerDtoIn seekerDtoIn) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody @Valid SeekerDtoIn seekerDtoIn) {
         return responseEntity(() -> {
             return this.seekerService.update(id, seekerDtoIn);
         });
     }
 
-    @Operation(summary = "Delete seeker", responses = {@ApiResponse(responseCode = "200", content = {
-            @Content(mediaType = "application/json",schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class))
-    })})
+    @Operation(summary = "Delete seeker", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class)) }) })
     @DeleteMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> deleteSeeker(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> deleteSeeker(@PathVariable(value = "id") Long id) {
         return responseEntity(() -> {
             this.seekerService.deleteSeeker(id);
             return new HashMap<>();

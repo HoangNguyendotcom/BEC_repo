@@ -24,34 +24,32 @@ import vn.unigap.common.controller.AbstractResponseController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 @RestController
 @SecurityRequirement(name = "Authorization")
 @RequestMapping(value = "/employers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name="Employer", description = "Employers management")
+@Tag(name = "Employer", description = "Employers management")
 public class EmployerController extends AbstractResponseController {
     private final EmployerService employerService;
 
     private static final Logger logger = LogManager.getLogger(EmployerController.class);
+
     @Autowired
-    public EmployerController( EmployerService employerService){
+    public EmployerController(EmployerService employerService) {
         this.employerService = employerService;
     }
 
     @Operation(summary = "Get all employers", responses = {
-            @ApiResponse(responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = ResponsePageEmployer.class))) })
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResponsePageEmployer.class))) })
     @GetMapping(value = "", consumes = MediaType.ALL_VALUE)
     // Add " ?page= X" to show the X page.
-    public ResponseEntity<?> list(@Valid PageDtoIn pageDtoIn){
+    public ResponseEntity<?> list(@Valid PageDtoIn pageDtoIn) {
         return responseEntity(() -> {
             return this.employerService.list(pageDtoIn);
         });
     }
-    @Operation(summary = "Get Employer by Id", responses = {
-            @ApiResponse(responseCode = "200",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseEmployer.class)) }) })
+
+    @Operation(summary = "Get Employer by Id", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEmployer.class)) }) })
     @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getEmployerById(@PathVariable(value = "id") Long id) {
         logger.info("Received request to get employer with ID: {}", id);
@@ -69,6 +67,7 @@ public class EmployerController extends AbstractResponseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
+
     @Operation(summary = "Create new employer", responses = { @ApiResponse(responseCode = "201", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEmployer.class)) }) })
     @PostMapping(value = "")
@@ -78,9 +77,8 @@ public class EmployerController extends AbstractResponseController {
         }, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Update employer", responses = {@ApiResponse(responseCode = "201", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEmployer.class))
-    })})
+    @Operation(summary = "Update employer", responses = { @ApiResponse(responseCode = "201", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEmployer.class)) }) })
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id,
             @RequestBody @Valid UpdateEmployerDtoIn updateEmployerDtoIn) {
@@ -89,11 +87,10 @@ public class EmployerController extends AbstractResponseController {
         });
     }
 
-    @Operation(summary = "Delete employer", responses = {@ApiResponse(responseCode = "200", content = {
-            @Content(mediaType = "application/json",schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class))
-    })})
+    @Operation(summary = "Delete employer", responses = { @ApiResponse(responseCode = "200", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = vn.unigap.common.response.ApiResponse.class)) }) })
     @DeleteMapping(value = "/{id}", consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<?> deleteEmployer(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> deleteEmployer(@PathVariable(value = "id") Long id) {
         return responseEntity(() -> {
             this.employerService.deleteEmployer(id);
             return new HashMap<>();
@@ -103,7 +100,8 @@ public class EmployerController extends AbstractResponseController {
     private static class ResponseEmployer extends vn.unigap.common.response.ApiResponse<EmployerDtoOut> {
     }
 
-    private static class ResponsePageEmployer extends vn.unigap.common.response.ApiResponse<PageDtoOut<EmployerDtoOut>> {
+    private static class ResponsePageEmployer
+            extends vn.unigap.common.response.ApiResponse<PageDtoOut<EmployerDtoOut>> {
     }
 
 }

@@ -1,6 +1,5 @@
 package vn.unigap.api.service.statistics;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,10 +19,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final ResumeRepository resumeRepository;
 
     @Autowired
-    public StatisticsServiceImpl(EmployerRepository employerRepository,
-                                 JobRepository jobRepository,
-                                 SeekerRepository seekerRepository,
-                                 ResumeRepository resumeRepository) {
+    public StatisticsServiceImpl(EmployerRepository employerRepository, JobRepository jobRepository,
+            SeekerRepository seekerRepository, ResumeRepository resumeRepository) {
         this.employerRepository = employerRepository;
         this.jobRepository = jobRepository;
         this.seekerRepository = seekerRepository;
@@ -40,29 +37,20 @@ public class StatisticsServiceImpl implements StatisticsService {
         Integer numResumes = resumeRepository.countByCreatedAtBetween(start, end);
         List<StatisticsDtoOut.AnalysisPerDayDto> chart = new ArrayList<>();
 
-        while(!fromDate.after(toDate)){
+        while (!fromDate.after(toDate)) {
             Date startOfDay = fromDate;
             Date endOfDay = toDate;
             Integer numEmployer = employerRepository.countByCreatedAtBetween(startOfDay, endOfDay);
             Integer numJob = jobRepository.countByCreatedAtBetween(startOfDay, endOfDay);
             Integer numSeeker = seekerRepository.countByCreatedAtBetween(startOfDay, endOfDay);
             Integer numResume = resumeRepository.countByCreatedAtBetween(startOfDay, endOfDay);
-            StatisticsDtoOut.AnalysisPerDayDto perDayDto = StatisticsDtoOut.AnalysisPerDayDto.builder()
-                    .date(fromDate)
-                    .numEmployer(numEmployer)
-                    .numJob(numJob)
-                    .numSeeker(numSeeker)
-                    .numResume(numResume)
-                    .build();
+            StatisticsDtoOut.AnalysisPerDayDto perDayDto = StatisticsDtoOut.AnalysisPerDayDto.builder().date(fromDate)
+                    .numEmployer(numEmployer).numJob(numJob).numSeeker(numSeeker).numResume(numResume).build();
             chart.add(perDayDto);
-            fromDate = addDays(fromDate, 1);;
+            fromDate = addDays(fromDate, 1);
+            ;
         }
-        return StatisticsDtoOut.builder()
-                .numEmployers(numEmployers)
-                .numJobs(numJobs)
-                .numSeekers(numSeekers)
-                .numResumes(numResumes)
-                .chart(chart)
-                .build();
+        return StatisticsDtoOut.builder().numEmployers(numEmployers).numJobs(numJobs).numSeekers(numSeekers)
+                .numResumes(numResumes).chart(chart).build();
     }
 }

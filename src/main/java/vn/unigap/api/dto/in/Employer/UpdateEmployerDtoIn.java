@@ -1,4 +1,5 @@
 package vn.unigap.api.dto.in.Employer;
+
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

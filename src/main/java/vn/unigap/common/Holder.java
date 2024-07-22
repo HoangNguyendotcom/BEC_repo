@@ -1,4 +1,5 @@
 package vn.unigap.common;
+
 import vn.unigap.api.repository.EmployerRepository;
 import vn.unigap.api.repository.FieldRepository;
 import vn.unigap.api.repository.ProvinceRepository;
@@ -42,4 +43,3 @@ public class Holder {
         Holder.seekerRepository = seekerRepository;
     }
 }
-

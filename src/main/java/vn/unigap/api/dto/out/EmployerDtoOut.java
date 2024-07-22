@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import vn.unigap.api.entity.Employer;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,14 +18,8 @@ public class EmployerDtoOut {
     private int province;
     private String description;
 
-
-    public static EmployerDtoOut from (Employer e) {
-        return EmployerDtoOut.builder()
-                .id(e.getId())
-                .email(e.getEmail())
-                .name(e.getName())
-                .province(e.getProvince())
-                .description(e.getDescription())
-                .build();
+    public static EmployerDtoOut from(Employer e) {
+        return EmployerDtoOut.builder().id(e.getId()).email(e.getEmail()).name(e.getName()).province(e.getProvince())
+                .description(e.getDescription()).build();
     }
 }

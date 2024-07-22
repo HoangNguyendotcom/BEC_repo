@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -21,7 +19,7 @@ public class Province implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
 //    @OneToMany(mappedBy = "province")

@@ -28,30 +28,16 @@ public class JobDtoOut {
     private Integer salary;
     private Date expiredAt;
 
-    public static JobDtoOut from (Job j) {
+    public static JobDtoOut from(Job j) {
         EmployerRepository employerRepository = Holder.getEmployerRepository();
 
-        Optional<Long> employerIdOptional = Optional.ofNullable(j.getEmployer())
-                .map(Employer::getId);
+        Optional<Long> employerIdOptional = Optional.ofNullable(j.getEmployer()).map(Employer::getId);
 
         long employerId = employerIdOptional.orElse(0L);
-        String employerName = employerRepository.findById(employerId)
-                    .map(Employer::getName)
-                    .orElse(null);
+        String employerName = employerRepository.findById(employerId).map(Employer::getName).orElse(null);
 
-
-
-        return JobDtoOut.builder()
-                .id(j.getId())
-                .title(j.getTitle())
-                .quantity(j.getQuantity())
-                .description(j.getDescription())
-                .salary(j.getSalary())
-                .fields(j.getFields())
-                .provinces(j.getProvinces())
-                .expiredAt(j.getExpiredAt())
-                .employerId(employerId)
-                .employerName(employerName)
-                .build();
+        return JobDtoOut.builder().id(j.getId()).title(j.getTitle()).quantity(j.getQuantity())
+                .description(j.getDescription()).salary(j.getSalary()).fields(j.getFields()).provinces(j.getProvinces())
+                .expiredAt(j.getExpiredAt()).employerId(employerId).employerName(employerName).build();
     }
 }

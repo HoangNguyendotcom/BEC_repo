@@ -30,37 +30,24 @@ public class ResumeDtoOut {
     private List<Province> provinces;
     private Integer salary;
 
-    public static ResumeDtoOut from (Resume r) {
+    public static ResumeDtoOut from(Resume r) {
         SeekerRepository seekerRepository = Holder.getSeekerRepository();
         ProvinceRepository provinceRepository = Holder.getProvinceRepository();
         FieldRepository fieldRepository = Holder.getFieldRepository();
 
-        String seekerName = seekerRepository.findById(r.getSeekerId())
-                .map(Seeker::getName)
-                .orElse(null);
+        String seekerName = seekerRepository.findById(r.getSeekerId()).map(Seeker::getName).orElse(null);
 
         List<Integer> provinceIds = Converter.extractIdFromStringDb(r.getProvinces());
         List<Integer> fieldIds = Converter.extractIdFromStringDb(r.getFields());
 
-        List<Province> provinces = provinceRepository.findAllById(provinceIds)
-                .stream()
-                .map(province -> new Province(province.getId(), province.getName()))
-                .collect(Collectors.toList());
+        List<Province> provinces = provinceRepository.findAllById(provinceIds).stream()
+                .map(province -> new Province(province.getId(), province.getName())).collect(Collectors.toList());
 
-        List<Field> fields = fieldRepository.findAllById(fieldIds)
-                .stream()
-                .map(field -> new Field(field.getId(), field.getName()))
-                .collect(Collectors.toList());
+        List<Field> fields = fieldRepository.findAllById(fieldIds).stream()
+                .map(field -> new Field(field.getId(), field.getName())).collect(Collectors.toList());
 
-        return ResumeDtoOut.builder()
-                .id(r.getId())
-                .seekerId(r.getSeekerId())
-                .seekerName(seekerName)
-                .careerObj(r.getCareerObj())
-                .title(r.getTitle())
-                .salary(r.getSalary())
-                .fields(fields)
-                .provinces(provinces)
-                .build();
+        return ResumeDtoOut.builder().id(r.getId()).seekerId(r.getSeekerId()).seekerName(seekerName)
+                .careerObj(r.getCareerObj()).title(r.getTitle()).salary(r.getSalary()).fields(fields)
+                .provinces(provinces).build();
     }
 }

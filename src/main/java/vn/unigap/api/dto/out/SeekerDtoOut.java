@@ -12,7 +12,6 @@ import vn.unigap.api.entity.Seeker;
 import vn.unigap.api.repository.ProvinceRepository;
 import vn.unigap.common.Holder;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,18 +28,10 @@ public class SeekerDtoOut {
     private Integer provinceId;
     private String provinceName;
 
-    public static SeekerDtoOut from (Seeker s) {
+    public static SeekerDtoOut from(Seeker s) {
         ProvinceRepository provinceRepository = Holder.getProvinceRepository();
-        String provinceName = provinceRepository.findById(s.getProvince().getId())
-                .map(Province::getName)
-                .orElse(null);
-        return SeekerDtoOut.builder()
-                .id(s.getId())
-                .name(s.getName())
-                .birthday(s.getBirthday())
-                .address(s.getAddress())
-                .provinceId(s.getProvince().getId())
-                .provinceName(provinceName)
-                .build();
+        String provinceName = provinceRepository.findById(s.getProvince().getId()).map(Province::getName).orElse(null);
+        return SeekerDtoOut.builder().id(s.getId()).name(s.getName()).birthday(s.getBirthday()).address(s.getAddress())
+                .provinceId(s.getProvince().getId()).provinceName(provinceName).build();
     }
 }

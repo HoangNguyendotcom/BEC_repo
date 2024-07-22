@@ -19,7 +19,7 @@ public class RedisConfiguration {
     private String redisPassword;
 
     @Bean
-    //Set redis parameters to connect to Redis Server
+    // Set redis parameters to connect to Redis Server
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisHost);

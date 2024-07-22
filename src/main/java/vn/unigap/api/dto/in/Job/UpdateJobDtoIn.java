@@ -32,12 +32,9 @@ public class UpdateJobDtoIn {
 
     private String description;
 
-
     private List<Integer> fieldIds;
 
-
     private List<Integer> provinceIds;
-
 
     private Integer salary;
 

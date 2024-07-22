@@ -8,9 +8,12 @@ import vn.unigap.api.dto.out.PageDtoOut;
 
 public interface EmployerService {
     PageDtoOut<EmployerDtoOut> list(PageDtoIn pageDtoIn);
+
     EmployerDtoOut getEmployerById(Long id);
+
     EmployerDtoOut create(EmployerDtoIn employerDtoIn);
 
     EmployerDtoOut update(Long id, UpdateEmployerDtoIn updateEmployerDtoIn);
+
     void deleteEmployer(Long id);
 }

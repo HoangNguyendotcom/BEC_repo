@@ -1,4 +1,5 @@
 package vn.unigap.api.entity;
+
 import jakarta.persistence.*;
 
 import java.io.Serial;

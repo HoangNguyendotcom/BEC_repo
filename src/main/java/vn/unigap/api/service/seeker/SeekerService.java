@@ -7,8 +7,12 @@ import vn.unigap.api.dto.out.PageDtoOut;
 
 public interface SeekerService {
     PageDtoOut<SeekerDtoOut> list(PageDtoIn pageDtoIn);
+
     SeekerDtoOut getSeekerById(long id);
+
     SeekerDtoOut create(SeekerDtoIn userDtoIn);
+
     SeekerDtoOut update(Long id, SeekerDtoIn seekerDtoIn);
+
     void deleteSeeker(Long id);
 }

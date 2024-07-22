@@ -14,13 +14,10 @@ import vn.unigap.api.dto.out.PageDtoOut;
 import vn.unigap.api.dto.out.EmployerDtoOut;
 import vn.unigap.api.entity.Employer;
 import vn.unigap.api.repository.EmployerRepository;
-import vn.unigap.api.service.base.BaseRedisService;
 import vn.unigap.api.service.base.BaseRedisServiceImpl;
-import vn.unigap.common.data_transform.Converter;
 import vn.unigap.common.errorcode.ErrorCode;
 import vn.unigap.common.exception.ApiException;
 import java.util.Date;
-
 
 @Service
 public class EmployerServiceImpl extends BaseRedisServiceImpl implements EmployerService {
@@ -53,14 +50,9 @@ public class EmployerServiceImpl extends BaseRedisServiceImpl implements Employe
         employerRepository.findByEmail(employerDtoIn.getEmail()).ifPresent(employer -> {
             throw new ApiException(ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST, "email already existed");
         });
-        Employer employer = employerRepository.save(Employer.builder()
-                .email(employerDtoIn.getEmail())
-                .name(employerDtoIn.getName())
-                .province(employerDtoIn.getProvince())
-                .description(employerDtoIn.getDescription())
-                .createdAt(new Date())
-                .updatedAt(new Date())
-                .build());
+        Employer employer = employerRepository.save(Employer.builder().email(employerDtoIn.getEmail())
+                .name(employerDtoIn.getName()).province(employerDtoIn.getProvince())
+                .description(employerDtoIn.getDescription()).createdAt(new Date()).updatedAt(new Date()).build());
         return EmployerDtoOut.from(employer);
     }
 

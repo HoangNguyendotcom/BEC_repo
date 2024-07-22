@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class BaseRedisServiceImpl implements BaseRedisService{
+public class BaseRedisServiceImpl implements BaseRedisService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final HashOperations<String, String, Object> hashOperations;
 
@@ -54,8 +54,8 @@ public class BaseRedisServiceImpl implements BaseRedisService{
     public List<Object> hashGetByFieldPrefix(String key, String filedPrefix) {
         List<Object> objects = new ArrayList<>();
         Map<String, Object> hashEntries = hashOperations.entries(key);
-        for (Map.Entry<String, Object> entry: hashEntries.entrySet()){
-            if(entry.getKey().startsWith(filedPrefix)){
+        for (Map.Entry<String, Object> entry : hashEntries.entrySet()) {
+            if (entry.getKey().startsWith(filedPrefix)) {
                 objects.add(entry.getValue());
             }
         }
@@ -74,7 +74,7 @@ public class BaseRedisServiceImpl implements BaseRedisService{
 
     @Override
     public void delete(String key, String field) {
-        hashOperations.delete(key,field);
+        hashOperations.delete(key, field);
     }
 
     @Override

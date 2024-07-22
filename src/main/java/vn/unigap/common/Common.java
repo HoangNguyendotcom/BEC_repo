@@ -1,11 +1,11 @@
 package vn.unigap.common;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 
 public class Common {
-
 
     public static String uuid() {
         return UUID.randomUUID().toString();
