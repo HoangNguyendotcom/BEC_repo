@@ -2,9 +2,9 @@
 
 This is a Spring Boot application for managing job postings and employers. It includes functionalities for CRUD operations, JWT-based authentication, OAuth2 login, and integrates with Redis for caching. The application also provides API documentation using SpringDoc OpenAPI.
 Contact:
-Nguyen Dac Hoang 
-Email: ndhoang7089@gmail.com 
-Github: https://github.com/HoangNguyendotcom/
+- Nguyen Dac Hoang 
+- Email: ndhoang7089@gmail.com 
+- Github: https://github.com/HoangNguyendotcom/
     
 ## Table of Contents
 
