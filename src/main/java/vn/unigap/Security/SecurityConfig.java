@@ -43,20 +43,6 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //Login using Oauth2 with Github Authetication
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/", "/login**", "/error**").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .oauth2Login(withDefaults())
-//                .formLogin(withDefaults())
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")         // URL for logout
-//                        .logoutSuccessUrl("/")         // Redirect after logout
-//                        .invalidateHttpSession(true)   // Invalidate session
-//                        .deleteCookies("JSESSIONID")   // Delete cookies
-//                );
 
         http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
                         .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
@@ -65,6 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/login**", "/error**", "/auth/login").permitAll()
                         .anyRequest().authenticated())
+                //Login using oauth2 resource server
                 .oauth2ResourceServer(configurer -> {
                     configurer.authenticationEntryPoint(customAuthEntryPoint);
                     configurer.jwt(jwtConfigurer -> {
@@ -76,7 +63,16 @@ public class SecurityConfig {
                             throw new RuntimeException(e);
                         }
                     });
-                });
+                })
+                //Login using oauth2 Github application
+                .oauth2Login(withDefaults())
+                .formLogin(withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")         // URL for logout
+                        .logoutSuccessUrl("/")         // Redirect after logout
+                        .invalidateHttpSession(true)   // Invalidate session
+                        .deleteCookies("JSESSIONID")   // Delete cookies
+                );
         return http.build();
     }
 
