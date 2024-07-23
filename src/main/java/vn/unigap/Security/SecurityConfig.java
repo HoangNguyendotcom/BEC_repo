@@ -49,9 +49,9 @@ public class SecurityConfig {
                 .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 // .cors(cfg -> cfg.disable())
                 .csrf(cfg -> cfg.disable())
-                .authorizeHttpRequests(
-                        (requests) -> requests.requestMatchers("/", "/login**", "/error**", "/auth/login", "/actuator/prometheus").permitAll()
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/", "/login**", "/error**", "/auth/login", "/actuator/prometheus").permitAll()
+                        .anyRequest().authenticated())
                 // Login using oauth2 resource server
                 .oauth2ResourceServer(configurer -> {
                     configurer.authenticationEntryPoint(customAuthEntryPoint);

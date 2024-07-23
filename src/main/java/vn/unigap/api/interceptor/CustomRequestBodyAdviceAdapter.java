@@ -26,13 +26,13 @@ public class CustomRequestBodyAdviceAdapter extends RequestBodyAdviceAdapter {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type type,
-                            Class<? extends HttpMessageConverter<?>> aClass) {
+            Class<? extends HttpMessageConverter<?>> aClass) {
         return true;
     }
 
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType,
-                                Class<? extends HttpMessageConverter<?>> converterType) {
+            Class<? extends HttpMessageConverter<?>> converterType) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest();
         loggingService.logRequest(request, body);
