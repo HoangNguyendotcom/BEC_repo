@@ -44,7 +44,7 @@ services:
     image: mysql:8.0.33
     environment:
       MYSQL_ROOT_PASSWORD: Admin@123
-      #      MYSQL_DATABASE: auth
+      MYSQL_DATABASE: job_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
@@ -53,26 +53,27 @@ services:
       - mysql-db:/var/lib/mysql
     restart: on-failure
 
-#  recruitmentapp:
-#    image: recruitmentapp:latest
-#    environment:
-#      SPRING_DATASOURCE_URL: 'jdbc:mysql://host.docker.internal:3306/job_db'
-#      SPRING_DATASOURCE_USERNAME: 'root'
-#      SPRING_DATASOURCE_PASSWORD: 'Admin@123'
-#      SPRING_JPA_HIBERNATE_DDLAUTO: 'update'
-#      SPRING_DATA_REDIS_HOST: 'host.docker.internal'
-#      SPRING_DATA_REDIS_PORT: '6379'
-#      SPRING_DATA_REDIS_PASSWORD: 'Redis@123'
-#      SPRING_DATA_MONGODB_HOST: 'host.docker.internal'
-#      SPRING_DATA_MONGODB_PORT: '27017'
-#      SPRING_DATA_MONGODB_USERNAME: 'user'
-#      SPRING_DATA_MONGODB_PASSWORD: 'User123'
-#      SPRING_DATA_MONGODB_DATABASE: 'sample_db'
-#    ports:
-#      - '8080:8080'
-#    extra_hosts:
-#      - "host.docker.internal:host-gateway"
-#    restart: on-failure
+  recruitmentapp:
+    image: recruitmentapp:latest
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://host.docker.internal:3306/job_db'
+      SPRING_DATASOURCE_USERNAME: 'root'
+      SPRING_DATASOURCE_PASSWORD: 'Admin@123'
+      SPRING_JPA_HIBERNATE_DDLAUTO: 'update'
+      SPRING_DATA_REDIS_HOST: 'host.docker.internal'
+      SPRING_DATA_REDIS_PORT: '6379'
+      SPRING_DATA_REDIS_PASSWORD: 'Redis@123'
+      SPRING_DATA_MONGODB_HOST: 'host.docker.internal'
+      SPRING_DATA_MONGODB_PORT: '27017'
+      SPRING_DATA_MONGODB_USERNAME: 'user'
+      SPRING_DATA_MONGODB_PASSWORD: 'User123'
+      SPRING_DATA_MONGODB_DATABASE: 'sample_db'
+    ports:
+      - '8080:8080'
+    build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: on-failure
 volumes:
   grafana:
     driver: local

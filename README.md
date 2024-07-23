@@ -68,6 +68,9 @@ The Recruitment Application is designed to streamline the process of job posting
    ./mvnw clean package
    java -jar target/recruitment-0.0.1-SNAPSHOT.jar
 
+3. Running the app using Docker:
+   docker compose up --build
+
 ## API Documentation:
 
 The API Documentation is avaiable at http://localhost:8080/swagger-ui-custom.html after running the application.
