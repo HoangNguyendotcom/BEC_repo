@@ -13,7 +13,7 @@ server:
 ---
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/job_db?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://localhost:3306/job_db
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: Admin@123
@@ -88,6 +88,9 @@ springdoc:
 ---
 sentry:
   dsn: https://271120737b3c796c5dc998958e86f9a4@o4507645258432512.ingest.us.sentry.io/4507645282549760
+---
+reqres:
+  url: https://reqres.in
 
 
 
