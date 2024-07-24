@@ -13,7 +13,7 @@ This is a Spring Boot application for managing job postings and employers. It in
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Running the Application](#running-the-application)
+- [Installation](#installation-and-running-application)
 - [API Documentation](#api-documentation)
 - [Security](#security)
 - [Links](#link)
@@ -24,7 +24,7 @@ The Recruitment Application is designed to streamline the process of job posting
 
 ## Features
 
-- **CRUD Operations**: Create, Read, Update, and Delete operations for Jobs and Employers.
+- **CRUD Operations**: Create, Read, Update, and Delete operations for Jobs, Employers, Seekers and Resumes.
 - **Authentication**: Secure authentication using JWT and OAuth2 Github
 - **Caching**: Integration with Redis for efficient caching.
 - **API Documentation**: Comprehensive API documentation with Swagger UI.
@@ -32,41 +32,30 @@ The Recruitment Application is designed to streamline the process of job posting
 
 ## Requirements
 
-- Java 11 or higher
+- Java 17 or higher
 - Maven
-- MySQL
-- Redis
+- Docker Desktop
 
-## Installation
-
+## Installation and Running application:
 1. Clone the repository:
 
-   git clone https://github.com/HoangNguyendotcom/BEC_repo
+   git clone https://github.com/HoangNguyendotcom/BEC_repo.git
 
-    3. Update the database configuration in `src/main/resources/application.yml`:
-
-        ```properties.yml
-        spring:
-          datasource:
-                url: jdbc:mysql://localhost:3306/job_db?serverTimezone=UTC&useSSL=false #Change to your database
-                driverClassName: com.mysql.cj.jdbc.Driver
-                username: root  #Change to your user
-                password: Admin@123 #Change to your password
-
-4. Install the dependencies and build the project:
-
-   ./mvnw clean install
-
-
-## Running the application
-1. Running the app using Maven:
-
-   ./mvnw spring-boot:run
-
-2. Or build jar file and run it:
-
-   ./mvnw clean package
-   java -jar target/recruitment-0.0.1-SNAPSHOT.jar
+2. Import database to MySQL:
+   - Run MySQL on Docker:
+     docker compose up -d mysql-db
+   
+   - Get the container_id : 
+      docker ps
+   
+   - Copy the SQL file to the Container:
+     docker cp job_db.sql <container_id>:/job_db.sql
+   
+   - Access the Container:
+     docker exec -it <container_id> /bin/sh
+   
+   - Import the Database:
+     mysql -u root -p job_db < /job_db.sql
 
 3. Running the app using Docker:
    docker compose up --build
