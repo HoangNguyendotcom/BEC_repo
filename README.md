@@ -43,19 +43,24 @@ The Recruitment Application is designed to streamline the process of job posting
 
 2. Import database to MySQL:
    - Run MySQL on Docker:
-     docker compose up -d mysql-db
+     - docker compose up -d mysql-db
    
-   - Get the container_id : 
-      docker ps
+   - Get the container_id :
+     - docker ps
    
    - Copy the SQL file to the Container:
-     docker cp job_db.sql <container_id>:/job_db.sql
+     - docker cp job_db.sql <container_id>:/job_db.sql
    
    - Access the Container:
-     docker exec -it <container_id> /bin/sh
+     - docker exec -it <container_id> /bin/sh
    
    - Import the Database:
-     mysql -u root -p job_db < /job_db.sql
+     - mysql -u root -p job_db < /job_db.sql
+
+   - Enter MySQL to check:
+     - mysql -u root -p
+     - USE job_db;
+     - SHOW TABLES;
 
 3. Running the app using Docker:
    docker compose up --build
@@ -67,18 +72,18 @@ The API Documentation is avaiable at http://localhost:8080/swagger-ui-custom.htm
 ## Security:
 1. Using JwT Tokens for Postman:
     - In Postman, You need to get the full authentication by obtaining a JWT token
-      by sending a POST request to the login endpoint (/login) with valid credentials.
-      POST http://localhost:8080/auth/login
-      Headers:
-      Content-Type: application/json
-      Body:
-      {
-      "username": "user",
-      "password": "password"
-      }
+      by sending a POST request to the login endpoint (/login) with valid credentials. 
+      - POST http://localhost:8080/auth/login
+        - Headers:
+          - Content-Type: application/json 
+        - Body:
+          - {
+            - "username": "user",
+            - "password": "password"
+            }
     - After getting the token, add the header Authentication for your request:
-      Headers:
-      Authorization: Bearer your-jwt-token
+      - Headers:
+        - Authorization: Bearer your-jwt-token
     - Now you can make authenticated requests to your secured endpoints.
 
 2. Using Oauth2 by GitHub for web:
